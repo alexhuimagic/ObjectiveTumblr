@@ -3,7 +3,7 @@
 //  MKNetworkKit
 //
 //  Created by Mugunth Kumar (@mugunthkumar) on 11/11/11.
-//  Copyright (C) 2011-2020 by Steinlogic
+//  Copyright (C) 2011-2020 by Steinlogic Consulting and Training Pte Ltd
 
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@
 #define MKNetworkKit_MKNetworkKit_h
 
 #ifndef __IPHONE_4_0
-#warning "MKNetworkKit uses features only available in iOS SDK 4.0 and later."
+#error "MKNetworkKit uses features only available in iOS SDK 4.0 and later."
 #endif
 
 #if TARGET_OS_IPHONE
@@ -36,22 +36,28 @@
 #elif TARGET_OS_MAC
 #import <Cocoa/Cocoa.h>
 #import <AppKit/AppKit.h>
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 1080
+#define DO_GCD_RETAIN_RELEASE 0
+#else
+#define DO_GCD_RETAIN_RELEASE 1
+#endif
 #endif
 
 #ifdef DEBUG
-#   define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
-#   define ELog(err) if(err) DLog(@"%@", err)
+#   define DLog(fmt, ...) {NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);}
+#   define ELog(err) {if(err) DLog(@"%@", err)}
 #else
 #   define DLog(...)
+#   define ELog(err)
 #endif
 
 // ALog always displays output regardless of the DEBUG setting
-#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+#define ALog(fmt, ...) {NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);};
 
 #import "Categories/NSString+MKNetworkKitAdditions.h"
 #import "Categories/NSDictionary+RequestEncoding.h"
 #import "Categories/NSDate+RFC1123.h"
-#import "Categories/NSData+Base64.h"
+#import "Categories/NSData+MKBase64.h"
 
 #if TARGET_OS_IPHONE
 #import "Categories/UIAlertView+MKNetworkKitAdditions.h"
@@ -59,7 +65,7 @@
 #import "Categories/NSAlert+MKNetworkKitAdditions.h"
 #endif
 
-#import "Reachability.h"
+#import "Reachability/Reachability.h"
 
 #import "MKNetworkOperation.h"
 #import "MKNetworkEngine.h"

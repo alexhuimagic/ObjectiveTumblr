@@ -3,6 +3,16 @@ JTObjectMapping
 
 Inspired by RestKit. A very simple objective-c framework that maps a JSON response from NSDictionary or NSArray to NSObject subclasses for iOS.
 
+Install
+-------
+
+### Original method
+
+Copy all files in JTObjectMapping/ into your project.
+
+### CocoaPods
+
+`$ pod search JTObjectMapping`, you should be able to specify the right version in your Podfile. Here's more information about [CocoaPods][].
 
 Usage
 -----
@@ -40,7 +50,7 @@ Define necessary mappings, from a dictionary key to a property keyPath.
                     @"age", @"p_age",
                     @"childs", @"p_childs",                    
                     [NSDate mappingWithKey:@"createDate"
-                          dateFormatString:@"yyyy-MM-dd'T'hh:mm:ssZ"], @"create_date",
+                          dateFormatString:@"yyyy-MM-dd'T'HH:mm:ssZ"], @"create_date",
                     nil];
 
 
@@ -73,6 +83,15 @@ For more detailed usage, see **JTObjectMappingTests.m**, will be adding more det
 Update Logs
 -----------
 
+v1.1
+- Refactored JTObjectMapping. Now extending custom mappings are much more cleaner.
+
+v1.0.7
+- Added JTSetMapping and JTDateEpochMappings, thanks to [@zcharter][] for making this happen!
+
+v1.0.6
+- Added experimental keypath support. use `#define JTOBJECTMAPPING_DISABLE_KEYPATH_SUPPORT = 1` to disable it.
+
 v1.0.5  
 - Fixed nested array causing crash
 
@@ -88,4 +107,9 @@ v1.0.2
 
 v1.0.1  
 - Added NSDate support for mappings
+
+
+[CocoaPods]:https://github.com/CocoaPods/CocoaPods
+[@zcharter]:https://github.com/zcharter
+
 

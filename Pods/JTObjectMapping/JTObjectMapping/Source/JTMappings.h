@@ -8,11 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol JTValidMappingKey;
 
-@protocol JTMappings <NSObject>
+@protocol JTMappings <NSObject, JTValidMappingKey>
 
 - (NSString *)key;
-- (NSDictionary *)mapping;
+- (NSMutableDictionary *)mapping;
 - (Class)targetClass;
 
 @end
@@ -22,11 +23,11 @@
 @interface JTMappings : NSObject <JTMappings>
 
 @property (nonatomic, retain) NSString *key;
-@property (nonatomic, retain) NSDictionary *mapping;
+@property (nonatomic, retain) NSMutableDictionary *mapping;
 @property (nonatomic, assign) Class targetClass;
 
 + (id <JTMappings>)mappingWithKey:(NSString *)aKey
                       targetClass:(Class)aClass
-                          mapping:(NSDictionary *)aMapping;
+                          mapping:(NSMutableDictionary *)aMapping;
 
 @end
